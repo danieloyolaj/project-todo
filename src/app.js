@@ -19,23 +19,7 @@ app.get('/', (req, res) => {
     res.status(200).json({message: 'Server OK'})
 })
 
-const database = [
-    {
-        id: 1,
-        title: "This is a test",
-        is_completed: false
-    },
-    {
-        id: 2,
-        title: "This is another test",
-        is_completed: true
-    },
-    {
-        id: 3,
-        title: "This is a third test",
-        is_completed: true
-    }
-]
+
 
 app.get('/todos', (req, res) => {
     res.status(200).json(database)
