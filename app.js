@@ -6,8 +6,13 @@ const express = require('express')
 //2. create app const and run the express()
 const app = express()
 
-//habilitar el recibir datos en formato JSON
+//Lets you receive data in JSON format
 app.use(express.json())
+
+//routes -> paths and HTTP verbs
+//controllers -> logic and actions for the database
+//services -> all related to req and res
+
 
 //4. create petitions
 app.get('/', (req, res) => {
@@ -24,11 +29,30 @@ const database = [
         id: 2,
         title: "This is another test",
         is_completed: true
+    },
+    {
+        id: 3,
+        title: "This is a third test",
+        is_completed: true
     }
 ]
 
 app.get('/todos', (req, res) => {
     res.status(200).json(database)
+})
+
+//This is to pass parameters :id
+//The semicolon is to indicate that the parameter is variable
+app.get('/todos/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const data = database.filter(todo => todo.id === id) //returns an array where the condition is true
+    
+    //checking if the data exists in the database
+    if(data.length !== 0) {
+        res.status(200).json({my_id: id, data: data[0]})
+    }else{
+        res.status(404).json({message: 'Id does not exist'})
+    }
 })
 
 app.post('/todos', (req, res) => {
